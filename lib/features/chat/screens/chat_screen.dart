@@ -6,17 +6,22 @@ import 'package:surf_practice_chat_flutter/features/chat/repository/chat_reposit
 
 /// Main screen of chat app, containing messages.
 class ChatScreen extends StatefulWidget {
+
   /// Repository for chat functionality.
-  final IChatRepository chatRepository;
+  late IChatRepository chatRepository;
 
   /// Constructor for [ChatScreen].
-  const ChatScreen({
+   ChatScreen({
     required this.chatRepository,
     Key? key,
   }) : super(key: key);
 
   @override
   State<ChatScreen> createState() => _ChatScreenState();
+
+   Route<void> route() {
+    return MaterialPageRoute<void>(builder: (_) =>  ChatScreen(chatRepository: chatRepository));
+  }
 }
 
 class _ChatScreenState extends State<ChatScreen> {
@@ -222,7 +227,8 @@ class _ChatAvatar extends StatelessWidget {
         child: Center(
           child: Text(
             userData.name != null
-                ? '${userData.name!.split(' ').first[0]}${userData.name!.split(' ').last[0]}'
+            // fixed bug
+                ? '${userData.name!.split(' ').first[0]}${userData.name!.split('').last[0]}'
                 : '',
             style: TextStyle(
               color: colorScheme.onPrimary,
